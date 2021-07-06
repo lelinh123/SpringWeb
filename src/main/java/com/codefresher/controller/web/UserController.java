@@ -1,4 +1,4 @@
-package com.codefresher.controller;
+package com.codefresher.controller.web;
 
 import java.util.List;
 
