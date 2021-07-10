@@ -9,9 +9,10 @@ import com.codefresher.model.LoginModel;
 import com.codefresher.model.Users;
 import com.codefresher.repository.UserRepository;
 import com.codefresher.service.UserService;
+
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	UserRepository userRepository;
 
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
 	public Users insertUser(Users users) {
 		// TODO Auto-generated method stub
 		return userRepository.save(users);
-		//insert into users(username, password, address)
+		// insert into users(username, password, address)
 	}
 
 	@Override
@@ -50,20 +51,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Users> searchByUsername(String inputSearch) {
 		// TODO Auto-generated method stub
-		return userRepository.findByUsernameLike("%"+inputSearch+"%");
+		return userRepository.findByUsernameLike("%" + inputSearch + "%");
 	}
 
 	@Override
 	public boolean checkLogin(LoginModel loginModel) {
 		// TODO Auto-generated method stub
-		//check username tồn tại trong db hay không
-		
+		// check username tồn tại trong db hay không
+
 		String username = loginModel.getUsername();
 		Users user = userRepository.findByUsername(username);
 		if (user == null) {
 			return false;
 		}
-		//check xem password có đúng không
+		// check xem password có đúng không
 		if (!loginModel.getPassword().equals(user.getPassword())) {
 			return false;
 		}
@@ -78,9 +79,26 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
-	
+
+	@Override
+	public String updateUserApi(Users user) {
+
+		// check exist user
+//		boolean check = userRepository.existsById(user.getId());
+		Users rs = userRepository.findById(user.getId()).get();
+		if (rs == null) {
+			return "Wrong user";
+		}
+		// TODO Auto-generated method stub
+		
+		rs.setUsername(user.getUsername());
+		userRepository.save(rs);
+		return "Update success";
+
+	}
+
 	// save update create
-	// findALL: get all , 
+	// findALL: get all ,
 	// getById
 	// deleteById
 

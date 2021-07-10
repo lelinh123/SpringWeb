@@ -25,4 +25,6 @@ public interface UserService {
 	
 	//check exiset user
 	boolean checkExistsUser(String username);
+	
+	String updateUserApi(Users user);
 }
